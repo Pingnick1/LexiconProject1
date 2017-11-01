@@ -10,12 +10,13 @@ public class ToDoItem
 	private String description;
 	private Status status;
 
-	private static int id = 0;
-	
+	private static int counter = 0;
+	private int id = 0;
 	public ToDoItem(String activityName, String description, LocalDateTime deadlineDate)
 	{
 		super();
-		id++;
+		counter++;
+		this.id=counter;
 		this.startDate = LocalDateTime.now();
 		this.status = Status.OPEN;
 		this.activityTitle = activityName;
@@ -23,7 +24,7 @@ public class ToDoItem
 		this.endDate = deadlineDate;
 	}
 	
-	public static int getId()
+	public  int getId()
 	{
 		return id;
 	}
@@ -78,9 +79,10 @@ public class ToDoItem
 	}
 
 
-	public void setStatus(Status status)
+	public Boolean setStatus(Status status)
 	{
 		this.status = status;
+		return true;
 	}
 	
 	public Boolean isOverDue()
