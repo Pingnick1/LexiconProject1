@@ -3,11 +3,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import Exceptions.ToDoItemNotFoundException;
+
 public class ToDoList
 {
 	List<ToDoItem> toDoList = new ArrayList<ToDoItem>();
 
-	
+	/***************************************************************************
+	* Function:			addToDo
+	* Args:				ToDoItem
+	* Returns:			Boolean
+	* Throws:			N/A
+	* Description:		
+	***************************************************************************/
 	public Boolean addToDo(ToDoItem item)
 	{
 		toDoList.add(item);
@@ -15,33 +23,158 @@ public class ToDoList
 	}
 	
 	
-	//Done
+	/***************************************************************************
+	* Function:			size
+	* Args:				N/A
+	* Returns:			int
+	* Throws:			N/A
+	* Description:		
+	***************************************************************************/
 	public int size() {
 		return this.toDoList.size();
 	}
 	
-	public Boolean removeItem(ToDoItem item)
+	/***************************************************************************
+	* Function:			removeToDoItem
+	* Args:				int index
+	* Returns:			Boolean
+	* Throws:			IndexOutOfBoundsException
+	* Description:		
+	***************************************************************************/
+	public Boolean removeToDoItemByIndex(int index) throws IndexOutOfBoundsException
+	{	
+		try {
+			if(this.toDoList.remove(index) != null) {
+				return true;
+			}
+		} catch (IndexOutOfBoundsException e) {
+			//e.printStackTrace();
+			System.out.println("IndexOutOfBoundsException! Index: " + index );
+		}
+		return false;
+				
+	}
+
+	/***************************************************************************
+	* Function:			findToDoItemByID
+	* Args:				Integer toDoItemID
+	* Returns:			ToDoItem
+	* Throws:			ToDoItemNotFoundException
+	* Description:		
+	***************************************************************************/
+	public ToDoItem findToDoItemByID(Integer toDoItemID) throws ToDoItemNotFoundException
 	{
+		Iterator<ToDoItem> it1 = this.toDoList.iterator();
+
+		// Better aproach for modify operations
+		while (it1.hasNext()) {
+			ToDoItem tmpItem = it1.next();
+			//System.out.println("Jämför toDoItemID:" + toDoItemID.intValue() + " getID:" + tmpItem.getId());
+			
+			if(tmpItem.getId() == toDoItemID.intValue()) {
+				//System.out.println("Match! toDoItemID:" + toDoItemID.intValue() + " getID:" + tmpItem.getId());
+				return tmpItem;
+			}
+		}
+		throw new ToDoItemNotFoundException();
+	}
+	
+	/***************************************************************************
+	* Function:			findToDoItemByID
+	* Args:				Integer toDoItemID
+	* Returns:			ToDoItem
+	* Throws:			ToDoItemNotFoundException
+	* Description:		
+	***************************************************************************/
+	public int indexOfID(Integer toDoItemID) throws ToDoItemNotFoundException
+	{
+		Iterator<ToDoItem> it1 = this.toDoList.iterator();
+
+		// Better aproach for modify operations
+		while (it1.hasNext()) {
+			ToDoItem tmpItem = it1.next();
+			int index = toDoList.indexOf(tmpItem);
+			System.out.println("Index: " + index);
+			System.out.println("Jämför toDoItemID:" + toDoItemID.intValue() + " getID:" + tmpItem.getId() + "Index:" + index);
+			
+			if(tmpItem.getId() == toDoItemID.intValue()) {
+				//System.out.println("Match! toDoItemID:" + toDoItemID.intValue() + " getID:" + tmpItem.getId());
+				return index;
+			}
+		}
+		throw new ToDoItemNotFoundException();
+	}
+	
+	
+	/***************************************************************************
+	* Function:			checkDeadlines
+	* Args:				N/A
+	* Returns:			N/A
+	* Throws:			N/A
+	* Description:		Kolla deadlines i listan och uppdatera status där det behövs
+	***************************************************************************/
+	public void checkDeadlines()
+	{
+		Iterator<ToDoItem> it1 = this.toDoList.iterator();
+
+		// Better aproach for modify operations
+		while (it1.hasNext()) {
+			ToDoItem tmpItem = it1.next();
+			if(tmpItem.isOverDue()) {
+				tmpItem.setStatus(Status.OVERDUE);
+			}
+		}
+	}
+	
+	/***************************************************************************
+	* Function:			getToDoListItem
+	* Args:				int index
+	* Returns:			ToDoItem
+	* Throws:			IndexOutOfBoundsException
+	* Description:		Kolla deadlines i listan och uppdatera status där det behövs
+	***************************************************************************/
+	public ToDoItem getToDoListItem(int index) throws IndexOutOfBoundsException
+	{
+		try {
+			return this.toDoList.get(index);
+		} catch (IndexOutOfBoundsException e) {
+			//e.printStackTrace();
+			System.out.println("IndexOutOfBoundsException! Index: " + index );
+		}
 		return null;
 		
 	}
 	
-	public ToDoItem findToDoItem ()
-	{
-		return null;
+	/***************************************************************************
+	* Function:			removeCompleted
+	* Args:				N/A
+	* Returns:			N/A
+	* Throws:			N/A
+	* Description:		Iterates through the list and removes status==COMPLETE items
+	***************************************************************************/
+	public void removeCompleted() {
+		Iterator<ToDoItem> it1 = this.toDoList.iterator();
+
+		int counter = 0;
+		// Better aproach for modify operations
+		while (it1.hasNext()) {
+			ToDoItem tmpItem = it1.next();
+			if(tmpItem.getStatus() == Status.COMPLETE) {
+				it1.remove();
+				counter++;
+				//this.removeToDoItem(index);
+			}
+		}
+		System.out.println("Antal borttagna poster i status COMPLETE:" + counter);
 	}
 	
-	public boolean kollaDeadline()
-	{
-		return false;
-	}
-	
-	public ToDoItem getToDoListItem (int index)
-	{
-		return this.toDoList.get(index);
-	}
-
-
+	/***************************************************************************
+	* Function:			toString
+	* Args:				N/A
+	* Returns:			String
+	* Throws:			N/A
+	* Description:		
+	***************************************************************************/
 	@Override
 	public String toString() {
 		Iterator<ToDoItem> it1 = this.toDoList.iterator();
@@ -51,12 +184,9 @@ public class ToDoList
 		// Better aproach for modify operations
 		while (it1.hasNext()) {
 			ToDoItem tmpString = it1.next();
-			tmpReturnString += counter++ + ". " + tmpString + " \n";
-			//System.out.println(tmpString);
-			
+			tmpReturnString += counter++ + ". ID: " + tmpString.getId() + ", " + tmpString + " \n";
 		}
 		return tmpReturnString;
-		//return "ToDoList [toDoList=" + toDoList + "]";
 	}
 	
 	
