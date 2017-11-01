@@ -1,35 +1,32 @@
 package todolist;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ToDoItem
 {
-	private LocalDate startDate;
-	private LocalDate endDate;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
 	
 	private String activityTitle;
 	private String description;
 	private Status status;
+
+	private static int id = 0;
 	
-	public ToDoItem(String activityName, String description, LocalDate deadlineDate)
+	public ToDoItem(String activityName, String description, LocalDateTime deadlineDate)
 	{
 		super();
-		this.startDate = LocalDate.now();
+		id++;
+		this.startDate = LocalDateTime.now();
 		this.status = Status.OPEN;
 		this.activityTitle = activityName;
 		this.description = description;
 		this.endDate = deadlineDate;
 	}
 	
-	public LocalDate getCreateDate()
+	public static int getId()
 	{
-		return startDate;
+		return id;
 	}
-	
-	public void setCreateDate(LocalDate createDate)
-	{
-		this.startDate = createDate;
-	}
-	
 	public String getActivityTitle()
 	{
 		return this.activityTitle;
@@ -50,23 +47,53 @@ public class ToDoItem
 		this.description = description;
 	}
 	
-	public LocalDate getDeadlineDate()
-	{
-		return endDate;
-	}
-	
-	public void setDeadlineDate(LocalDate deadlineDate)
-	{
-		this.endDate = deadlineDate;
-	}
 
 	@Override
 	public String toString() {
 		return "startDate: " + startDate + ", endDate: " + endDate + ", activityName: " + activityTitle
 				+ ", description: " + description + ", status:" + status + "";
 	}
+
+
+	public LocalDateTime getStartDate()
+	{
+		return startDate;
+	}
+
+	public LocalDateTime getEndDate()
+	{
+		return endDate;
+	}
+
+
+	public void setEndDate(LocalDateTime endDate)
+	{
+		this.endDate = endDate;
+	}
+
+
+	public Status getStatus()
+	{
+		return status;
+	}
+
+
+	public void setStatus(Status status)
+	{
+		this.status = status;
+	}
 	
-	
+	public Boolean isOverDue(ToDoItem toDoItem)
+	{
+		LocalDateTime temp= LocalDateTime.now();
+		if (temp.isAfter(toDoItem.endDate))
+		{
+			toDoItem.status=Status.OVERDUE;
+			return true;
+		}
+		else
+			return false;
+	}
 	
 	
 }
