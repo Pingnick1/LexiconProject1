@@ -3,29 +3,33 @@ import java.time.LocalDate;
 
 public class ToDoItem
 {
-	private LocalDate createDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	
 	private String activityName;
 	private String description;
-	private LocalDate deadlineDate;
+	private Status status;
+	
 	public ToDoItem(String activityName, String description, LocalDate deadlineDate)
 	{
 		super();
 		//this.createDate = createDate;
+		this.status = Status.OPEN;
 		this.activityName = activityName;
 		this.description = description;
-		this.deadlineDate = deadlineDate;
+		this.endDate = deadlineDate;
 	}
 	public LocalDate getCreateDate()
 	{
-		return createDate;
+		return startDate;
 	}
 	public void setCreateDate(LocalDate createDate)
 	{
-		this.createDate = createDate;
+		this.startDate = createDate;
 	}
 	public String getActivityName()
 	{
-		return activityName;
+		return this.activityName;
 	}
 	public void setActivityName(String activityName)
 	{
@@ -41,11 +45,11 @@ public class ToDoItem
 	}
 	public LocalDate getDeadlineDate()
 	{
-		return deadlineDate;
+		return endDate;
 	}
 	public void setDeadlineDate(LocalDate deadlineDate)
 	{
-		this.deadlineDate = deadlineDate;
+		this.endDate = deadlineDate;
 	}
 	
 	
