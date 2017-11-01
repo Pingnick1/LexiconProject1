@@ -24,12 +24,13 @@ public class NiklasTestMain {
 		LocalDate today1 = LocalDate.now();
 		LocalDateTime today2 = LocalDateTime.now();
 		LocalDateTime anotherDay = LocalDateTime.of(2017, Month.JUNE, 24, 12, 30, 24);
+		LocalDate anotherDay2 = LocalDate.of(2017, Month.JUNE, 24);
 		
 		System.out.println("Today1: " + today1);
 		System.out.println("Today2: " + today2);
 		System.out.println("Deadline: " + anotherDay);
 		
-		ToDoItem t1 = new ToDoItem("Aktivitet1", "Description1", today1);
+		ToDoItem t1 = new ToDoItem("Aktivitet1", "Description1", anotherDay2);
 		
 		if(todoListTest.addToDo(t1) && todoListTest.addToDo(t1) && todoListTest.addToDo(t1)) {
 			System.out.println("Ett styck todo tillagt.");

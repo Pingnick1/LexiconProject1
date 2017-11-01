@@ -6,16 +6,16 @@ public class ToDoItem
 	private LocalDate startDate;
 	private LocalDate endDate;
 	
-	private String activityName;
+	private String activityTitle;
 	private String description;
 	private Status status;
 	
 	public ToDoItem(String activityName, String description, LocalDate deadlineDate)
 	{
 		super();
-		//this.createDate = createDate;
+		this.startDate = LocalDate.now();
 		this.status = Status.OPEN;
-		this.activityName = activityName;
+		this.activityTitle = activityName;
 		this.description = description;
 		this.endDate = deadlineDate;
 	}
@@ -30,14 +30,14 @@ public class ToDoItem
 		this.startDate = createDate;
 	}
 	
-	public String getActivityName()
+	public String getActivityTitle()
 	{
-		return this.activityName;
+		return this.activityTitle;
 	}
 	
-	public void setActivityName(String activityName)
+	public void setActivityTitle(String activityName)
 	{
-		this.activityName = activityName;
+		this.activityTitle = activityName;
 	}
 	
 	public String getDescription()
@@ -62,7 +62,7 @@ public class ToDoItem
 
 	@Override
 	public String toString() {
-		return "startDate: " + startDate + ", endDate: " + endDate + ", activityName: " + activityName
+		return "startDate: " + startDate + ", endDate: " + endDate + ", activityName: " + activityTitle
 				+ ", description: " + description + ", status:" + status + "";
 	}
 	
