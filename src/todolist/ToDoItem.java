@@ -19,38 +19,54 @@ public class ToDoItem
 		this.description = description;
 		this.endDate = deadlineDate;
 	}
+	
 	public LocalDate getCreateDate()
 	{
 		return startDate;
 	}
+	
 	public void setCreateDate(LocalDate createDate)
 	{
 		this.startDate = createDate;
 	}
+	
 	public String getActivityName()
 	{
 		return this.activityName;
 	}
+	
 	public void setActivityName(String activityName)
 	{
 		this.activityName = activityName;
 	}
+	
 	public String getDescription()
 	{
 		return description;
 	}
+	
 	public void setDescription(String description)
 	{
 		this.description = description;
 	}
+	
 	public LocalDate getDeadlineDate()
 	{
 		return endDate;
 	}
+	
 	public void setDeadlineDate(LocalDate deadlineDate)
 	{
 		this.endDate = deadlineDate;
 	}
+
+	@Override
+	public String toString() {
+		return "startDate: " + startDate + ", endDate: " + endDate + ", activityName: " + activityName
+				+ ", description: " + description + ", status:" + status + "";
+	}
+	
+	
 	
 	
 }
