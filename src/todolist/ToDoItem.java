@@ -83,12 +83,11 @@ public class ToDoItem
 		this.status = status;
 	}
 	
-	public Boolean isOverDue(ToDoItem toDoItem)
+	public Boolean isOverDue()
 	{
-		LocalDateTime temp= LocalDateTime.now();
-		if (temp.isAfter(toDoItem.endDate))
+		if ( LocalDateTime.now().isAfter(this.endDate))
 		{
-			toDoItem.status=Status.OVERDUE;
+			this.status=Status.OVERDUE;
 			return true;
 		}
 		else
