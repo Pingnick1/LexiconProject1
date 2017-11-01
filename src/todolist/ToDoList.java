@@ -184,7 +184,7 @@ public class ToDoList
 		// Better aproach for modify operations
 		while (it1.hasNext()) {
 			ToDoItem tmpString = it1.next();
-			tmpReturnString += counter++ + ". ID: " + tmpString.getId() + ", " + tmpString + " \n";
+			tmpReturnString += counter++ + ". " + tmpString + " \n";
 		}
 		return tmpReturnString;
 	}
