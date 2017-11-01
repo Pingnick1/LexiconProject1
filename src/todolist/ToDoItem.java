@@ -1,5 +1,6 @@
 package todolist;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ToDoItem
 {
@@ -45,13 +46,15 @@ public class ToDoItem
 	
 	public void setDescription(String description)
 	{
+		
 		this.description = description;
 	}
 	
 
 	@Override
 	public String toString() {
-		return "startDate: " + startDate + ", endDate: " + endDate + ", activityName: " + activityTitle
+		 DateTimeFormatter formatter =   DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+		return id + " startDate: " + startDate.format(formatter) + ", endDate: " + endDate.format(formatter) + ", activityName: " + activityTitle
 				+ ", description: " + description + ", status:" + status + "";
 	}
 
@@ -94,6 +97,11 @@ public class ToDoItem
 		}
 		else
 			return false;
+	}
+
+	public void setStartDate(LocalDateTime startDate)
+	{
+		this.startDate = startDate;
 	}
 	
 	
