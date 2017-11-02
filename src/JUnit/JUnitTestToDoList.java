@@ -17,7 +17,11 @@ import todolist.ToDoList;
 class JUnitTestToDoList {
 
 	@Test
-	void testAddTaskToList_() {
+	void testAddTaskToList() {
+		System.out.println("-------------------------------------------------------");
+		System.out.println("testAddTaskToList:");
+		System.out.println("-------------------------------------------------------");
+		
 		ToDoList todoListTest = new ToDoList();
 		
 		//LocalDate today1 = LocalDate.now();
@@ -32,6 +36,10 @@ class JUnitTestToDoList {
 	
 	@Test
 	void testRemoveToDoItemFromList() {
+		System.out.println("-------------------------------------------------------");
+		System.out.println("testRemoveToDoItemFromList:");
+		System.out.println("-------------------------------------------------------");
+		
 		ToDoList todoListTest = new ToDoList();
 		
 		LocalDateTime anotherDay2 = LocalDateTime.of(2017, Month.JUNE, 24, 15, 15,24);
@@ -60,6 +68,10 @@ class JUnitTestToDoList {
 	
 	@Test
 	void testCheckDeadlines() {
+		System.out.println("-------------------------------------------------------");
+		System.out.println("testCheckDeadlines:");
+		System.out.println("-------------------------------------------------------");
+		
 		ToDoList todoListTest = new ToDoList();
 		
 		LocalDateTime today = LocalDateTime.now();
@@ -91,6 +103,10 @@ class JUnitTestToDoList {
 	
 	@Test
 	void testSetNewStatus() {
+		System.out.println("-------------------------------------------------------");
+		System.out.println("testSetNewStatus:");
+		System.out.println("-------------------------------------------------------");
+		
 		ToDoList todoListTest = new ToDoList();
 		
 		LocalDateTime today = LocalDateTime.now();
@@ -109,6 +125,10 @@ class JUnitTestToDoList {
 	
 	@Test
 	void testFindToDoItem() {
+		System.out.println("-------------------------------------------------------");
+		System.out.println("testFindToDoItem:");
+		System.out.println("-------------------------------------------------------");
+		
 		ToDoList todoListTest = new ToDoList();
 		
 		LocalDateTime today = LocalDateTime.now();
@@ -147,6 +167,10 @@ class JUnitTestToDoList {
 	
 	@Test
 	void testRemoveItemsInStatusComplete() {
+		System.out.println("-------------------------------------------------------");
+		System.out.println("testRemoveItemsInStatusComplete:");
+		System.out.println("-------------------------------------------------------");
+		
 		ToDoList todoListTest = new ToDoList();
 		
 		LocalDateTime today = LocalDateTime.now();
@@ -176,6 +200,9 @@ class JUnitTestToDoList {
 	
 	@Test
 	void testGetToDoListItemByIndex() {
+		System.out.println("-------------------------------------------------------");
+		System.out.println("testGetToDoListItemByIndex:");
+		System.out.println("-------------------------------------------------------");
 		ToDoList todoListTest = new ToDoList();
 		
 		LocalDateTime today = LocalDateTime.now();
@@ -196,5 +223,65 @@ class JUnitTestToDoList {
 		assertTrue(newItem.getActivityTitle().toString().equals(t2.getActivityTitle().toString()));
 		
 		
+	}
+	
+	@Test
+	void testFindToDoItemByTitle() {
+		System.out.println("-------------------------------------------------------");
+		System.out.println("testFindToDoItemByTitle:");
+		System.out.println("-------------------------------------------------------");
+		ToDoList todoListTest = new ToDoList();
+		
+		LocalDateTime today = LocalDateTime.now();
+		LocalDateTime overDueDate1 = today.minusDays(4);
+		LocalDateTime overDueDate2 = today.minusHours(4);
+		LocalDateTime notOverDueDate1 = today.plusDays(6);
+		
+		ToDoItem t1 = new ToDoItem("Aktivitet1", "Description1", overDueDate1);
+		ToDoItem t2 = new ToDoItem("Aktivitet2", "Description2", overDueDate2);
+		ToDoItem t3 = new ToDoItem("Aktivitet3", "Description3", notOverDueDate1);
+		
+		todoListTest.addToDo(t1);
+		todoListTest.addToDo(t2);
+		todoListTest.addToDo(t3);
+		
+		try {
+			ToDoItem foundItem = todoListTest.findToDoItemByTitle("Aktivitet2");
+			
+			assertTrue(foundItem.getActivityTitle().toString().equals(t2.getActivityTitle().toString()));
+		} catch (ToDoItemNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("ToDoItemNotFoundException");
+		}
+		
+	}
+	
+	@Test
+	void testAutoRemoveCompleteOverdue() {
+		System.out.println("-------------------------------------------------------");
+		System.out.println("testAutoRemoveCompleteOverdue:");
+		System.out.println("-------------------------------------------------------");
+		
+		ToDoList todoListTest = new ToDoList();
+		
+		LocalDateTime today = LocalDateTime.now();
+		LocalDateTime overDueDate1 = today.minusDays(4);
+		LocalDateTime overDueDate2 = today.minusHours(4);
+		LocalDateTime notOverDueDate1 = today.plusDays(6);
+		
+		ToDoItem t1 = new ToDoItem("Aktivitet1", "Description1", overDueDate1);
+		ToDoItem t2 = new ToDoItem("Aktivitet2", "Description2", overDueDate2);
+		ToDoItem t3 = new ToDoItem("Aktivitet3", "Description3", notOverDueDate1);
+		
+		todoListTest.addToDo(t1);
+		todoListTest.addToDo(t2);
+		todoListTest.addToDo(t3);
+		
+		System.out.println(todoListTest);
+		
+		todoListTest.autoRemoveCompleteOverdue();
+		
+		System.out.println(todoListTest);
 	}
 }
