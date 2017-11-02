@@ -79,13 +79,6 @@ public class ToDoItem
 				+ " " + descriptionF + " " + status;
 	}
 
-	/*
-	 * @Override public String toString() { DateTimeFormatter formatter =
-	 * DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"); return id + " startDate: " +
-	 * startDate.format(formatter) + ", endDate: " + endDate.format(formatter) +
-	 * ", activityName: " + activityTitle + ", description: " + description +
-	 * ", status:" + status + ""; }
-	 */
 	public LocalDateTime getStartDate()
 	{
 		return startDate;
