@@ -42,9 +42,8 @@ public class ToDoList
 	* Description:		
 	 * @throws ToDoItemNotFoundException 
 	***************************************************************************/
-	public Boolean removeToDoItemByID(int itemID) throws IndexOutOfBoundsException, ToDoItemNotFoundException
-	{	
-		
+	public Boolean removeToDoItemByID(int itemID)
+	{			
 		try {
 			int indexToRemove = this.indexOfID(itemID);
 			
@@ -53,8 +52,6 @@ public class ToDoList
 			if(this.toDoList.remove(indexToRemove) != null) {
 				return true; 
 			}
-			
-			
 		} 
 		catch (IndexOutOfBoundsException e) {
 			//e.printStackTrace();

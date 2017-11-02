@@ -52,18 +52,10 @@ class JUnitTestToDoList {
 		
 		System.out.println(todoListTest);
 		
-		try {
-			assertTrue(todoListTest.removeToDoItemByID(idToRemove));
-			assertTrue(todoListTest.size() == 2);
-			System.out.println(todoListTest);
-			
-		} catch (IndexOutOfBoundsException | ToDoItemNotFoundException e) {
-			// TODO Auto-generated catch block
-			fail("IndexOutOfBoundsException | ToDoItemNotFoundException");
-			//e.printStackTrace();
-		}
-		
-		
+		assertTrue(todoListTest.removeToDoItemByID(idToRemove));
+		assertTrue(todoListTest.size() == 2);
+		System.out.println(todoListTest);
+
 	}
 	
 	@Test
@@ -131,9 +123,7 @@ class JUnitTestToDoList {
 		todoListTest.addToDo(t1);
 		todoListTest.addToDo(t2);
 		todoListTest.addToDo(t3);
-		
-		//System.out.println(todoListTest);
-		
+				
 		int itemToFind = todoListTest.getToDoListItem(1).getId();
 		
 		try {
