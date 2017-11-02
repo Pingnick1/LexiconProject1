@@ -34,16 +34,36 @@ class JUnitTestToDoList {
 	void testRemoveToDoItemFromList() {
 		ToDoList todoListTest = new ToDoList();
 		
-		//LocalDate today1 = LocalDate.now();
 		LocalDateTime anotherDay2 = LocalDateTime.of(2017, Month.JUNE, 24, 15, 15,24);
 		
 		ToDoItem t1 = new ToDoItem("Aktivitet1", "Description1", anotherDay2);
+		ToDoItem t2 = new ToDoItem("Aktivitet2", "Description2", anotherDay2);
+		ToDoItem t3 = new ToDoItem("Aktivitet3", "Description3", anotherDay2);
 		
 		assertTrue(todoListTest.addToDo(t1));	
-		assertTrue(todoListTest.addToDo(t1));
-		assertTrue(todoListTest.size() == 2);
-		assertTrue(todoListTest.removeToDoItemByIndex(1));
-		assertTrue(todoListTest.size() == 1);
+		assertTrue(todoListTest.addToDo(t2));
+		assertTrue(todoListTest.addToDo(t3));	
+		
+		int idToRemove = todoListTest.getToDoListItem(1).getId();
+		
+		System.out.println("id to remove: " + idToRemove);
+		
+		assertTrue(todoListTest.size() == 3);
+		
+		System.out.println(todoListTest);
+		
+		try {
+			assertTrue(todoListTest.removeToDoItemByID(idToRemove));
+			assertTrue(todoListTest.size() == 2);
+			System.out.println(todoListTest);
+			
+		} catch (IndexOutOfBoundsException | ToDoItemNotFoundException e) {
+			// TODO Auto-generated catch block
+			fail("IndexOutOfBoundsException | ToDoItemNotFoundException");
+			//e.printStackTrace();
+		}
+		
+		
 	}
 	
 	@Test

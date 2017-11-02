@@ -40,17 +40,34 @@ public class ToDoList
 	* Returns:			Boolean
 	* Throws:			IndexOutOfBoundsException
 	* Description:		
+	 * @throws ToDoItemNotFoundException 
 	***************************************************************************/
-	public Boolean removeToDoItemByIndex(int index) throws IndexOutOfBoundsException
+	public Boolean removeToDoItemByID(int itemID) throws IndexOutOfBoundsException, ToDoItemNotFoundException
 	{	
+		
 		try {
-			if(this.toDoList.remove(index) != null) {
-				return true;
+			int indexToRemove = this.indexOfID(itemID);
+			
+			//System.out.println("itemID: " + itemID + ", indexToRemove:" + indexToRemove);
+			
+			if(this.toDoList.remove(indexToRemove) != null) {
+				return true; 
 			}
-		} catch (IndexOutOfBoundsException e) {
+			
+			
+		} 
+		catch (IndexOutOfBoundsException e) {
 			//e.printStackTrace();
-			System.out.println("IndexOutOfBoundsException! Index: " + index );
+			System.out.println("IndexOutOfBoundsException! item ID: " + itemID);
 		}
+		catch (ToDoItemNotFoundException e) {
+			//e.printStackTrace();
+			System.out.println("ToDoItemNotFoundException! item ID: " + itemID );
+		}
+		finally {
+			System.out.println("Finally");
+		}
+		
 		return false;
 				
 	}
@@ -94,8 +111,8 @@ public class ToDoList
 		while (it1.hasNext()) {
 			ToDoItem tmpItem = it1.next();
 			int index = toDoList.indexOf(tmpItem);
-			System.out.println("Index: " + index);
-			System.out.println("Jämför toDoItemID:" + toDoItemID.intValue() + " getID:" + tmpItem.getId() + "Index:" + index);
+			//System.out.println("Index: " + index);
+			//System.out.println("Jämför toDoItemID:" + toDoItemID.intValue() + " getID:" + tmpItem.getId() + "Index:" + index);
 			
 			if(tmpItem.getId() == toDoItemID.intValue()) {
 				//System.out.println("Match! toDoItemID:" + toDoItemID.intValue() + " getID:" + tmpItem.getId());
