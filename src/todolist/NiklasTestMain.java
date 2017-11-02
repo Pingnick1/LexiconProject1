@@ -70,8 +70,8 @@ public class NiklasTestMain {
 			//e.printStackTrace();
 		}
 		
-		todoListTest.getToDoListItem(2).setStatus(Status.COMPLETE);
-		todoListTest.getToDoListItem(0).setStatus(Status.COMPLETE);
+		todoListTest.getToDoListItemByIndex(2).setStatus(Status.COMPLETE);
+		todoListTest.getToDoListItemByIndex(0).setStatus(Status.COMPLETE);
 		System.out.println(todoListTest);
 		todoListTest.removeCompleted();
 		System.out.println(todoListTest);

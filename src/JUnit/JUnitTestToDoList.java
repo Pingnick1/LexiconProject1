@@ -44,7 +44,7 @@ class JUnitTestToDoList {
 		assertTrue(todoListTest.addToDo(t2));
 		assertTrue(todoListTest.addToDo(t3));	
 		
-		int idToRemove = todoListTest.getToDoListItem(1).getId();
+		int idToRemove = todoListTest.getToDoListItemByIndex(1).getId();
 		
 		System.out.println("id to remove: " + idToRemove);
 		
@@ -82,11 +82,11 @@ class JUnitTestToDoList {
 		
 		//System.out.println(todoListTest);
 		
-		assertTrue(todoListTest.getToDoListItem(0).getStatus() == Status.OVERDUE);
+		assertTrue(todoListTest.getToDoListItemByIndex(0).getStatus() == Status.OVERDUE);
 		
-		assertTrue(todoListTest.getToDoListItem(1).getStatus() == Status.OVERDUE);
+		assertTrue(todoListTest.getToDoListItemByIndex(1).getStatus() == Status.OVERDUE);
 		
-		assertTrue(todoListTest.getToDoListItem(2).getStatus() == Status.OPEN);
+		assertTrue(todoListTest.getToDoListItemByIndex(2).getStatus() == Status.OPEN);
 	}
 	
 	@Test
@@ -100,11 +100,11 @@ class JUnitTestToDoList {
 		todoListTest.addToDo(t1);
 		
 		
-		assertTrue(todoListTest.getToDoListItem(0).getStatus() == Status.OPEN);
+		assertTrue(todoListTest.getToDoListItemByIndex(0).getStatus() == Status.OPEN);
 		
-		assertTrue(todoListTest.getToDoListItem(0).setStatus(Status.COMPLETE));
+		assertTrue(todoListTest.getToDoListItemByIndex(0).setStatus(Status.COMPLETE));
 		
-		assertTrue(todoListTest.getToDoListItem(0).getStatus() == Status.COMPLETE);
+		assertTrue(todoListTest.getToDoListItemByIndex(0).getStatus() == Status.COMPLETE);
 	}
 	
 	@Test
@@ -124,7 +124,7 @@ class JUnitTestToDoList {
 		todoListTest.addToDo(t2);
 		todoListTest.addToDo(t3);
 				
-		int itemToFind = todoListTest.getToDoListItem(1).getId();
+		int itemToFind = todoListTest.getToDoListItemByIndex(1).getId();
 		
 		try {
 			ToDoItem foundToDoItem = todoListTest.findToDoItemByID(itemToFind); 
@@ -165,12 +165,36 @@ class JUnitTestToDoList {
 		todoListTest.addToDo(t3);
 		todoListTest.addToDo(t4);
 		
-		assertTrue(todoListTest.getToDoListItem(0).setStatus(Status.COMPLETE));
-		assertTrue(todoListTest.getToDoListItem(2).setStatus(Status.COMPLETE));
+		assertTrue(todoListTest.getToDoListItemByIndex(0).setStatus(Status.COMPLETE));
+		assertTrue(todoListTest.getToDoListItemByIndex(2).setStatus(Status.COMPLETE));
 		assertTrue(todoListTest.size() == 4);
 		
 		todoListTest.removeCompleted();
 		assertTrue(todoListTest.size() == 2);
 			
+	}
+	
+	@Test
+	void testGetToDoListItemByIndex() {
+		ToDoList todoListTest = new ToDoList();
+		
+		LocalDateTime today = LocalDateTime.now();
+		LocalDateTime overDueDate1 = today.minusDays(4);
+		LocalDateTime overDueDate2 = today.minusHours(4);
+		LocalDateTime notOverDueDate1 = today.plusDays(6);
+		
+		ToDoItem t1 = new ToDoItem("Aktivitet1", "Description1", overDueDate1);
+		ToDoItem t2 = new ToDoItem("Aktivitet2", "Description2", overDueDate2);
+		ToDoItem t3 = new ToDoItem("Aktivitet3", "Description3", notOverDueDate1);
+		
+		todoListTest.addToDo(t1);
+		todoListTest.addToDo(t2);
+		todoListTest.addToDo(t3);
+		
+		ToDoItem newItem = todoListTest.getToDoListItemByIndex(1);
+		System.out.println("newItem.getTitle: " + newItem.getActivityTitle().toString() + ", t2.getTitle: " + t2.getActivityTitle().toString());
+		assertTrue(newItem.getActivityTitle().toString().equals(t2.getActivityTitle().toString()));
+		
+		
 	}
 }
