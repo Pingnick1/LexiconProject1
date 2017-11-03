@@ -8,7 +8,7 @@ import Exceptions.ToDoItemNotFoundException;
 public class ToDoList
 {
 	List<ToDoItem> toDoList = new ArrayList<ToDoItem>();
-	public static void autoRemove(ToDoList toDoList) throws IndexOutOfBoundsException, ToDoItemNotFoundException
+	public void autoRemove(ToDoList toDoList) throws IndexOutOfBoundsException, ToDoItemNotFoundException
 	{
 		Iterator<ToDoItem> it1 = toDoList.toDoList.iterator();
 		while (it1.hasNext())
@@ -20,7 +20,7 @@ public class ToDoList
 			}
 		}
 	}
-	public static ToDoItem searchForTitle(ToDoList toDoList, String Search) throws IndexOutOfBoundsException, ToDoItemNotFoundException
+	public ToDoItem searchForTitle(ToDoList toDoList, String Search) throws IndexOutOfBoundsException, ToDoItemNotFoundException
 	{
 		Iterator<ToDoItem> it1 = toDoList.toDoList.iterator();
 		int i = 1;
