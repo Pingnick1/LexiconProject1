@@ -3,15 +3,17 @@ package todolist;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * @author Ludwig
+ *
+ */
 public class ToDoItem
 {
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
-
 	private String activityTitle;
 	private String description;
 	private Status status;
-
 	private static int counter = 0;
 	private int id = 0;
 
