@@ -69,13 +69,7 @@ public class Menu
 	public void editItem(ToDoItem toDoItem)
 	{
 		System.out.println(toDoItem);
-		System.out.println("What do you want to change?");
-		System.out.println("1) Start date");
-		System.out.println("2) Deadline");
-		System.out.println("3) Name of activity");
-		System.out.println("4) Description of activity");
-		System.out.println("5) Status");
-		System.out.print("Choice:");
+		this.printEditMenu();
 		int choice;
 		//Scanner sc = new Scanner(System.in);
 		choice = this.sc.nextInt();
@@ -181,6 +175,16 @@ public class Menu
 		System.out.println("2) INPROGRESS");
 		System.out.println("3) COMPLETE");
 		System.out.println("4) OVERDUE");
+		System.out.print("Choice:");
+	}
+	
+	public void printEditMenu() {
+		System.out.println("What do you want to change?");
+		System.out.println("1) Start date");
+		System.out.println("2) Deadline");
+		System.out.println("3) Name of activity");
+		System.out.println("4) Description of activity");
+		System.out.println("5) Status");
 		System.out.print("Choice:");
 	}
 
