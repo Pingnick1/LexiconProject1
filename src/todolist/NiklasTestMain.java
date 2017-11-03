@@ -77,7 +77,7 @@ public class NiklasTestMain {
 		System.out.println(todoListTest);
 		
 		try {
-			int index = todoListTest.indexOfID(2);
+			int index = todoListTest.getIndexOfID(2);
 			System.out.println("Found index: " + index);
 		} catch (ToDoItemNotFoundException e) {
 			// TODO Auto-generated catch block

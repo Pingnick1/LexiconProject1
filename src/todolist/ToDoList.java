@@ -8,37 +8,8 @@ import Exceptions.ToDoItemNotFoundException;
 public class ToDoList
 {
 	List<ToDoItem> toDoList = new ArrayList<ToDoItem>();
-	public void autoRemove(ToDoList toDoList) throws IndexOutOfBoundsException, ToDoItemNotFoundException
-	{
-		Iterator<ToDoItem> it1 = toDoList.toDoList.iterator();
-		while (it1.hasNext())
-		{
-			ToDoItem tmpItem = it1.next();
-			if (tmpItem.getStatus() == Status.OVERDUE || (tmpItem.getStatus() == Status.COMPLETE))
-			{
-				toDoList.removeToDoItemByID(tmpItem.getId());
-			}
-		}
-	}
-	public ToDoItem searchForTitle(ToDoList toDoList, String Search) throws IndexOutOfBoundsException, ToDoItemNotFoundException
-	{
-		Iterator<ToDoItem> it1 = toDoList.toDoList.iterator();
-		int i = 1;
-		ToDoItem tmpItem = null;
-		while (it1.hasNext())
-		{
-			tmpItem=toDoList.getToDoListItem(i);
-			if (Search.equalsIgnoreCase(tmpItem.getActivityTitle()))
-			{
-				return tmpItem;
-			}
-			i++;
-		}
-		System.out.println("Could not find "+ Search);
-		return null;
-	}
-
-
+	
+	
 	/***************************************************************************
 	 * Add ToDoItem to ArrayList
 	 * @param item
