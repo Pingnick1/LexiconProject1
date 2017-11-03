@@ -211,7 +211,7 @@ public class Menu
 	 */
 	public void print()
 	{
-		System.out.println("Id   Start date       End date         Name       Description          Status");
+		System.out.println("Id Start date       \t End date         \tName       Description          Status");
 	}
 
 	/**

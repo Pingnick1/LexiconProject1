@@ -54,7 +54,12 @@ public class ToDoItem
 
 		this.description = description;
 	}
-
+	/**
+	 *This is our custom toString function.
+	 * It tries to fix the position so it will be printed correct independent by size
+	 * @param <void>
+	 * @return returns a String
+	 */
 	@Override
 	public String toString()
 	{
@@ -77,7 +82,7 @@ public class ToDoItem
 		}
 		String descriptionF = description + buffer;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
-		return id + " " + startDate.format(formatter) + " " + endDate.format(formatter) + " " + activityTitleF
+		return  startDate.format(formatter) + "\t " + endDate.format(formatter) + " \t" + activityTitleF
 				+ " " + descriptionF + " " + status;
 	}
 
@@ -106,7 +111,13 @@ public class ToDoItem
 		this.status = status;
 		return true;
 	}
-
+	/**
+	 * Checks if the deadline have been reached
+	 * and sets it to overdue.
+	 * @param <void>
+	 *                The type of object you want to load
+	 * @return returns a boolean
+	 */
 	public Boolean isOverDue()
 	{
 		if (LocalDateTime.now().isAfter(this.endDate))
