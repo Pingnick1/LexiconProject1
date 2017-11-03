@@ -13,6 +13,16 @@ import Exceptions.ToDoItemNotFoundException;
  */
 public class Menu
 {
+	private Scanner sc;
+
+
+	
+	
+	public Menu() {
+		super();
+		this.sc = new Scanner(System.in);
+	}
+
 	/**
 	 * This function will take a input and format a LocalDateTime variable
 	 * 
@@ -21,13 +31,13 @@ public class Menu
 	 * @return returns a LocalDateTime
 	 * @throws IllegalStateException
 	 */
-	public static LocalDateTime localDateTimeFormater()
+	public LocalDateTime localDateTimeFormater()
 	{
 		LocalDateTime date;
 		while (true)
 		{
 			System.out.println("Print date in this format: yyyy/mm/dd hh:mm");
-			Scanner sc = new Scanner(System.in);
+			//sc = new Scanner(System.in);
 			sc.findInLine("(\\d\\d\\d\\d)/(\\d\\d)/(\\d\\d) (\\d\\d):(\\d\\d)");
 			try
 			{
@@ -48,6 +58,7 @@ public class Menu
 		}
 	}
 
+
 	/**
 	 * This function will take a ToDoItem and gives the user a choice to what to
 	 * change
@@ -55,7 +66,7 @@ public class Menu
 	 * @param <ToDoItem>
 	 *                The item you want to change
 	 */
-	public static void editItem(ToDoItem toDoItem)
+	public void editItem(ToDoItem toDoItem)
 	{
 		System.out.println(toDoItem);
 		System.out.println("What do you want to change?");
@@ -64,9 +75,10 @@ public class Menu
 		System.out.println("3) Name of activity");
 		System.out.println("4) Description of activity");
 		System.out.println("5) Status");
+		System.out.print("Choice:");
 		int choice;
-		Scanner sc = new Scanner(System.in);
-		choice = sc.nextInt();
+		//Scanner sc = new Scanner(System.in);
+		choice = this.sc.nextInt();
 		LocalDateTime date = null;
 		switch (choice)
 		{
@@ -89,29 +101,31 @@ public class Menu
 			toDoItem.setDescription(description);
 			break;
 		case 5:
-			System.out.println("Type OPEN, INPROGRESS, COMPLETE or OVERDUE");
-			String status = sc.nextLine();
-			if (status.equals("OPEN"))
+			//System.out.println("Type OPEN, INPROGRESS, COMPLETE or OVERDUE");
+			this.printStatusMenu();
+			int choice1 = sc.nextInt();
+			switch (choice1)
 			{
-				toDoItem.setStatus(Status.OPEN);
-			}
-			else if (status.equals("INPROGRESS"))
-			{
-				toDoItem.setStatus(Status.INPROGRESS);
-			}
-			else if (status.equals("COMPLETE"))
-			{
-				toDoItem.setStatus(Status.COMPLETE);
-			}
-			else if (status.equals("OVERDUE"))
-			{
-				toDoItem.setStatus(Status.OVERDUE);
-			}
-			else
-			{
-				System.out.println("Invaild choice!");
+			case 1:
+				toDoItem.setStatus(Status.OPEN);	
+				break;
+			
+			
+			case 2:
+				toDoItem.setStatus(Status.INPROGRESS);	
+				break;
+		
+			
+			case 3:
+				toDoItem.setStatus(Status.COMPLETE);	
+				break;
+	
+			case 4:
+				toDoItem.setStatus(Status.OVERDUE);	
+				break;
 			}
 			break;
+			
 		case 0:
 			break;
 		default:
@@ -127,14 +141,13 @@ public class Menu
 	 *                The type of object you want to load
 	 * @return returns a ToDoItem
 	 */
-	public static ToDoItem newitem()
+	public ToDoItem newitem()
 	{
 		LocalDateTime deadlineDate = localDateTimeFormater();
-		Scanner sc = new Scanner(System.in);
 		System.out.print("Name = ");
-		String name = sc.nextLine();
+		String name = this.sc.nextLine();
 		System.out.print("Description = ");
-		String description = sc.nextLine();
+		String description = this.sc.nextLine();
 		ToDoItem toDoItem = new ToDoItem(name, description, deadlineDate);
 		return toDoItem;
 	}
@@ -145,7 +158,7 @@ public class Menu
 	 * 
 	 * @param <void>
 	 */
-	public static void printInstructions()
+	public void printInstructions()
 	{
 		clearConsole();
 		System.out.println("Menu");
@@ -159,9 +172,19 @@ public class Menu
 		System.out.println("8) Save list");
 		System.out.println("9) Load list");
 		System.out.println("0) Exit");
+		System.out.print("Choice:");
+	}
+	
+	public void printStatusMenu() {
+		System.out.println("Chose status:");
+		System.out.println("1) OPEN");
+		System.out.println("2) INPROGRESS");
+		System.out.println("3) COMPLETE");
+		System.out.println("4) OVERDUE");
+		System.out.print("Choice:");
 	}
 
-	public final static void clearConsole()
+	public final void clearConsole()
 	{
 		try
 		{
@@ -186,7 +209,7 @@ public class Menu
 	 * This function just makes the printing of the list nicer
 	 * @param <void>
 	 */
-	public static void print()
+	public void print()
 	{
 		System.out.println("Id   Start date       End date         Name       Description          Status");
 	}
@@ -199,32 +222,41 @@ public class Menu
 	 *                The type of object you want to load
 	 * @throws ToDoItemNotFoundException
 	 */
-	public static void mainMenu() throws ToDoItemNotFoundException
+
+	public void mainMenu() 
 	{
 		boolean quit = false;
 		int choice;
 		String str = null;
-		Scanner sc = new Scanner(System.in);
+
 		ToDoList toDoList = new ToDoList();
+		
+		createTestObjects(toDoList);
 
 		while (quit == false)
 		{
 			printInstructions();
-			choice = sc.nextInt();
+			choice = this.sc.nextInt();
 			switch (choice)
 			{
 			case 1: // Add item
 				toDoList.addToDo(newitem());
 				break;
 			case 2: // Remove item
-				choice = sc.nextInt();
+				choice = this.sc.nextInt();
 				toDoList.removeToDoItemByID(choice);
 				break;
 			case 3: // Edit item
 				System.out.println(toDoList);
-				System.out.println("Choose item to edit");
+				System.out.print("Choose item to edit:");
 				choice = sc.nextInt();
-				editItem(toDoList.findToDoItemByID(choice));
+				try {
+					editItem(toDoList.findToDoItemByID(choice));
+				} catch (ToDoItemNotFoundException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Choice with ID:" + choice + " not found. ToDoItemNotFoundException." );
+					//e1.printStackTrace();
+				}
 				break;
 			case 4: // Check if deadline has been exceeded
 				toDoList.checkDeadlines();
@@ -243,7 +275,7 @@ public class Menu
 				break;
 			case 7: // Search for a specific Item
 				System.out.print("Search for =");
-				str = sc.next();
+				str = this.sc.next();
 				try
 				{
 					ToDoItem item = toDoList.findToDoItemByTitle(str);
@@ -288,5 +320,21 @@ public class Menu
 			}
 		}
 		sc.close();
+	}
+	
+	public void createTestObjects(ToDoList todoLIST) {
+		
+		LocalDateTime today = LocalDateTime.now();
+		LocalDateTime overDueDate1 = today.minusDays(4);
+		LocalDateTime overDueDate2 = today.minusHours(4);
+		LocalDateTime notOverDueDate1 = today.plusDays(6);
+		
+		ToDoItem t1 = new ToDoItem("Aktivitet1", "Description1", overDueDate1);
+		ToDoItem t2 = new ToDoItem("Aktivitet2", "Description2", overDueDate2);
+		ToDoItem t3 = new ToDoItem("Aktivitet3", "Description3", notOverDueDate1);
+		
+		todoLIST.addToDo(t1);
+		todoLIST.addToDo(t2);
+		todoLIST.addToDo(t3);
 	}
 }

@@ -2,13 +2,8 @@ package todolist;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-
 import Exceptions.ToDoItemNotFoundException;
-import javafx.util.converter.LocalDateStringConverter;
 
 public class NiklasTestMain {
 
