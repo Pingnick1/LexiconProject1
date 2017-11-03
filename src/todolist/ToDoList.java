@@ -38,45 +38,38 @@ public class ToDoList
 		return null;
 	}
 
+
 	/***************************************************************************
-	* Function:			addToDo
-	* Args:				ToDoItem
-	* Returns:			Boolean
-	* Throws:			N/A
-	* Description:		
-	***************************************************************************/
-	public Boolean addToDo(ToDoItem item)
+	 * Add ToDoItem to ArrayList
+	 * @param item
+	 * @return Boolean
+	 ***************************************************************************/
+	public Boolean addToDo(ToDoItem newToDoItem)
 	{
-		toDoList.add(item);
+		this.toDoList.add(newToDoItem);
 		return true;
 	}
 	
 	
 	/***************************************************************************
-	* Function:			size
-	* Args:				N/A
-	* Returns:			int
-	* Throws:			N/A
-	* Description:		
+	* Returns size of the ArrayList in ToDoList
+	* @return	int size	
 	***************************************************************************/
 	public int size() {
 		return this.toDoList.size();
 	}
 	
 	/***************************************************************************
-	* Function:			removeToDoItem
-	* Args:				int index
-	* Returns:			Boolean
-	* Throws:			IndexOutOfBoundsException
-	* Description:		
-	 * @throws ToDoItemNotFoundException 
+	* Remove ToDoItem by unique ID
+	* @param int itemID
+	* @return Boolean 		 			 
 	***************************************************************************/
 	public Boolean removeToDoItemByID(int itemID)
 	{			
 		try {
-			int indexToRemove = this.indexOfID(itemID);
+			int indexToRemove = this.getIndexOfID(itemID);
 			
-			//System.out.println("itemID: " + itemID + ", indexToRemove:" + indexToRemove);
+			System.out.println("itemID: " + itemID + ", indexToRemove:" + indexToRemove);
 			
 			if(this.toDoList.remove(indexToRemove) != null) {
 				return true; 
@@ -90,20 +83,16 @@ public class ToDoList
 			//e.printStackTrace();
 			System.out.println("ToDoItemNotFoundException! item ID: " + itemID );
 		}
-		finally {
-			System.out.println("Finally");
-		}
-		
+
 		return false;
 				
 	}
 
 	/***************************************************************************
-	* Function:			findToDoItemByID
-	* Args:				Integer toDoItemID
-	* Returns:			ToDoItem
-	* Throws:			ToDoItemNotFoundException
-	* Description:		
+	* Find ToDoItem object on unique ID
+	* @param Integer toDoItemID
+	* @return ToDoItem
+	* @throws ToDoItemNotFoundException		
 	***************************************************************************/
 	public ToDoItem findToDoItemByID(Integer toDoItemID) throws ToDoItemNotFoundException
 	{
@@ -123,13 +112,36 @@ public class ToDoList
 	}
 	
 	/***************************************************************************
-	* Function:			findToDoItemByID
-	* Args:				Integer toDoItemID
-	* Returns:			ToDoItem
-	* Throws:			ToDoItemNotFoundException
-	* Description:		
+	* Sök efter title och returnera objekt om hittas.
+	* @param  String "searchString"
+	* @return ToDoItem
+	* @throws ToDoItemNotFoundException	
 	***************************************************************************/
-	public int indexOfID(Integer toDoItemID) throws ToDoItemNotFoundException
+	public ToDoItem findToDoItemByTitle(String searchString) throws ToDoItemNotFoundException
+	{
+		Iterator<ToDoItem> it1 = this.toDoList.iterator();
+		
+		while (it1.hasNext())
+		{
+			ToDoItem tmpItem = it1.next();
+			
+			if (searchString.equalsIgnoreCase(tmpItem.getActivityTitle().toString()))
+			{
+				return tmpItem;
+			}
+
+		} 
+		throw new ToDoItemNotFoundException(); 
+
+	}
+	
+	/***************************************************************************
+	* Get index in ArrayList of position by ID.
+	* @param Integer toDoItemID
+	* @return todo.ToDoItem
+	* @throws ToDoItemNotFoundException	 
+	***************************************************************************/
+	public int getIndexOfID(Integer toDoItemID) throws ToDoItemNotFoundException
 	{
 		Iterator<ToDoItem> it1 = this.toDoList.iterator();
 
@@ -150,11 +162,8 @@ public class ToDoList
 	
 	
 	/***************************************************************************
-	* Function:			checkDeadlines
-	* Args:				N/A
-	* Returns:			N/A
-	* Throws:			N/A
-	* Description:		Kolla deadlines i listan och uppdatera status där det behövs
+	* Kolla deadlines i listan och uppdatera status där det behövs.
+	* @param	None
 	***************************************************************************/
 	public void checkDeadlines()
 	{
@@ -170,13 +179,37 @@ public class ToDoList
 	}
 	
 	/***************************************************************************
-	* Function:			getToDoListItem
-	* Args:				int index
-	* Returns:			ToDoItem
-	* Throws:			IndexOutOfBoundsException
-	* Description:		Kolla deadlines i listan och uppdatera status där det behövs
+	* Automatic remove all objects that are status overdue or completed
 	***************************************************************************/
-	public ToDoItem getToDoListItem(int index) throws IndexOutOfBoundsException
+	public void autoRemoveCompleteOverdue()
+	{
+		Iterator<ToDoItem> it1 = this.toDoList.iterator();
+		while (it1.hasNext())
+		{
+			ToDoItem tmpItem = it1.next();
+			
+			System.out.println("Testing: \"" + tmpItem.getActivityTitle() + "\" which are in state: " + tmpItem.getStatus());
+			
+			tmpItem.isOverDue();	//Update status if needed
+			
+			// todoListTest.removeToDoItemByID(idToRemove)
+			
+			if ( tmpItem.getStatus().equals(Status.OVERDUE) || (tmpItem.getStatus().equals(Status.COMPLETE)) )
+			{			
+				
+				System.out.println("Removing " + tmpItem.getActivityTitle() + " wtih ID:" + tmpItem.getId() + " which are in state: " + tmpItem.getStatus());
+				it1.remove();	
+			}
+		}
+	}
+	
+	/***************************************************************************
+	 * Kolla deadlines i listan och uppdatera status där det behövs	
+	 * @param int index
+	 * @return	ToDoItem
+	 * @throws IndexOutOfBoundsException
+	 ***************************************************************************/
+	public ToDoItem getToDoListItemByIndex(int index) throws IndexOutOfBoundsException
 	{
 		try {
 			return this.toDoList.get(index);
@@ -185,15 +218,11 @@ public class ToDoList
 			System.out.println("IndexOutOfBoundsException! Index: " + index );
 		}
 		return null;
-		
+		   
 	}
 	
 	/***************************************************************************
-	* Function:			removeCompleted
-	* Args:				N/A
-	* Returns:			N/A
-	* Throws:			N/A
-	* Description:		Iterates through the list and removes status==COMPLETE items
+	* Iterates through the list and removes status == COMPLETE items		
 	***************************************************************************/
 	public void removeCompleted() {
 		Iterator<ToDoItem> it1 = this.toDoList.iterator();
@@ -212,11 +241,7 @@ public class ToDoList
 	}
 	
 	/***************************************************************************
-	* Function:			toString
-	* Args:				N/A
-	* Returns:			String
-	* Throws:			N/A
-	* Description:		
+	* @return String
 	***************************************************************************/
 	@Override
 	public String toString() {
@@ -232,7 +257,5 @@ public class ToDoList
 		return tmpReturnString;
 	}
 	
-	
-	
-	
+
 }
