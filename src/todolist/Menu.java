@@ -16,9 +16,10 @@ public class Menu
 	/**
 	 * This function will take a input and format a LocalDateTime variable
 	 * 
-	 * @param <void> The type of object you want to load
+	 * @param <void>
+	 *                The type of object you want to load
 	 * @return returns a LocalDateTime
-	 * @throws IllegalStateException 
+	 * @throws IllegalStateException
 	 */
 	public static LocalDateTime localDateTimeFormater()
 	{
@@ -46,10 +47,13 @@ public class Menu
 			return date;
 		}
 	}
+
 	/**
-	 * This function will take a ToDoItem and gives the user a choice to what to change 
+	 * This function will take a ToDoItem and gives the user a choice to what to
+	 * change
 	 * 
-	 * @param <ToDoItem> The item you want to change
+	 * @param <ToDoItem>
+	 *                The item you want to change
 	 */
 	public static void editItem(ToDoItem toDoItem)
 	{
@@ -115,10 +119,12 @@ public class Menu
 			break;
 		}
 	}
+
 	/**
 	 * This function will take input from the user and and put in the list
 	 * 
-	 * @param <void> The type of object you want to load
+	 * @param <void>
+	 *                The type of object you want to load
 	 * @return returns a ToDoItem
 	 */
 	public static ToDoItem newitem()
@@ -134,7 +140,9 @@ public class Menu
 	}
 
 	/**
-	 * This function clears the screen(Wont work on eclipse) and prints out the choices to the user
+	 * This function clears the screen(Wont work on eclipse) and prints out the
+	 * choices to the user
+	 * 
 	 * @param <void>
 	 */
 	public static void printInstructions()
@@ -173,6 +181,7 @@ public class Menu
 			// Handle any exceptions.
 		}
 	}
+
 	/**
 	 * This function just makes the printing of the list nicer
 	 * @param <void>
@@ -181,14 +190,16 @@ public class Menu
 	{
 		System.out.println("Id   Start date       End date         Name       Description          Status");
 	}
+
 	/**
-	 * This is the where the program starts.
-	 * User is given choices by text print out to the screen.
-	 * User can pick choices with keyboard with values from 0 to 9.
-	 * @param <void> The type of object you want to load
-	 * @throws ToDoItemNotFoundException 
+	 * This is the where the program starts. User is given choices by text print out
+	 * to the screen. User can pick choices with keyboard with values from 0 to 9.
+	 * 
+	 * @param <void>
+	 *                The type of object you want to load
+	 * @throws ToDoItemNotFoundException
 	 */
-	public static void  mainMenu() throws ToDoItemNotFoundException
+	public static void mainMenu() throws ToDoItemNotFoundException
 	{
 		boolean quit = false;
 		int choice;
@@ -219,7 +230,7 @@ public class Menu
 				toDoList.checkDeadlines();
 				break;
 			case 5: // Remove done/expired items
-				toDoList.autoRemove(toDoList);
+				toDoList.autoRemoveCompleteOverdue();
 				break;
 			case 6: // Get the description for each item.
 				if (toDoList.size() == 0)
@@ -233,7 +244,15 @@ public class Menu
 			case 7: // Search for a specific Item
 				System.out.print("Search for =");
 				str = sc.next();
-				toDoList.searchForTitle(toDoList, str);
+				try
+				{
+					ToDoItem item = toDoList.findToDoItemByTitle(str);
+					System.out.println("Found " + item);
+				}
+				catch (ToDoItemNotFoundException e)
+				{
+					System.out.println("No item found");
+				}
 				break;
 			case 8:
 			{
@@ -261,7 +280,7 @@ public class Menu
 				break;
 			}
 			case 0:
-				quit = true; 
+				quit = true;
 				break;
 			default:
 				System.out.println("Invaild choice!");
