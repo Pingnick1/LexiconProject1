@@ -15,10 +15,8 @@ public class Menu
 {
 	private Scanner sc;
 
-
-	
-	
-	public Menu() {
+	public Menu()
+	{
 		super();
 		this.sc = new Scanner(System.in);
 	}
@@ -37,7 +35,6 @@ public class Menu
 		while (true)
 		{
 			System.out.println("Print date in this format: yyyy/mm/dd hh:mm");
-			//sc = new Scanner(System.in);
 			sc.findInLine("(\\d\\d\\d\\d)/(\\d\\d)/(\\d\\d) (\\d\\d):(\\d\\d)");
 			try
 			{
@@ -58,7 +55,6 @@ public class Menu
 		}
 	}
 
-
 	/**
 	 * This function will take a ToDoItem and gives the user a choice to what to
 	 * change
@@ -71,7 +67,6 @@ public class Menu
 		System.out.println(toDoItem);
 		this.printEditMenu();
 		int choice;
-		//Scanner sc = new Scanner(System.in);
 		choice = this.sc.nextInt();
 		LocalDateTime date = null;
 		switch (choice)
@@ -95,31 +90,28 @@ public class Menu
 			toDoItem.setDescription(description);
 			break;
 		case 5:
-			//System.out.println("Type OPEN, INPROGRESS, COMPLETE or OVERDUE");
 			this.printStatusMenu();
 			int choice1 = sc.nextInt();
 			switch (choice1)
 			{
 			case 1:
-				toDoItem.setStatus(Status.OPEN);	
+				toDoItem.setStatus(Status.OPEN);
 				break;
-			
-			
+
 			case 2:
-				toDoItem.setStatus(Status.INPROGRESS);	
+				toDoItem.setStatus(Status.INPROGRESS);
 				break;
-		
-			
+
 			case 3:
-				toDoItem.setStatus(Status.COMPLETE);	
+				toDoItem.setStatus(Status.COMPLETE);
 				break;
-	
+
 			case 4:
-				toDoItem.setStatus(Status.OVERDUE);	
+				toDoItem.setStatus(Status.OVERDUE);
 				break;
 			}
 			break;
-			
+
 		case 0:
 			break;
 		default:
@@ -168,8 +160,9 @@ public class Menu
 		System.out.println("0) Exit");
 		System.out.print("Choice:");
 	}
-	
-	public void printStatusMenu() {
+
+	public void printStatusMenu()
+	{
 		System.out.println("Chose status:");
 		System.out.println("1) OPEN");
 		System.out.println("2) INPROGRESS");
@@ -177,8 +170,9 @@ public class Menu
 		System.out.println("4) OVERDUE");
 		System.out.print("Choice:");
 	}
-	
-	public void printEditMenu() {
+
+	public void printEditMenu()
+	{
 		System.out.println("What do you want to change?");
 		System.out.println("1) Start date");
 		System.out.println("2) Deadline");
@@ -211,6 +205,7 @@ public class Menu
 
 	/**
 	 * This function just makes the printing of the list nicer
+	 * 
 	 * @param <void>
 	 */
 	public void print()
@@ -227,14 +222,12 @@ public class Menu
 	 * @throws ToDoItemNotFoundException
 	 */
 
-	public void mainMenu() 
+	public void mainMenu()
 	{
 		boolean quit = false;
 		int choice;
 		String str = null;
-
 		ToDoList toDoList = new ToDoList();
-		
 		createTestObjects(toDoList);
 
 		while (quit == false)
@@ -254,12 +247,13 @@ public class Menu
 				System.out.println(toDoList);
 				System.out.print("Choose item to edit:");
 				choice = sc.nextInt();
-				try {
+				try
+				{
 					editItem(toDoList.findToDoItemByID(choice));
-				} catch (ToDoItemNotFoundException e) {
-					// TODO Auto-generated catch block
-					System.out.println("Choice with ID:" + choice + " not found. ToDoItemNotFoundException." );
-					//e1.printStackTrace();
+				}
+				catch (ToDoItemNotFoundException e)
+				{
+					System.out.println("Choice with ID:" + choice + " not found. ToDoItemNotFoundException.");
 				}
 				break;
 			case 4: // Check if deadline has been exceeded
@@ -325,18 +319,19 @@ public class Menu
 		}
 		sc.close();
 	}
-	
-	public void createTestObjects(ToDoList todoLIST) {
-		
+
+	public void createTestObjects(ToDoList todoLIST)
+	{
+
 		LocalDateTime today = LocalDateTime.now();
 		LocalDateTime overDueDate1 = today.minusDays(4);
 		LocalDateTime overDueDate2 = today.minusHours(4);
 		LocalDateTime notOverDueDate1 = today.plusDays(6);
-		
+
 		ToDoItem t1 = new ToDoItem("Aktivitet1", "Description1", overDueDate1);
 		ToDoItem t2 = new ToDoItem("Aktivitet2", "Description2", overDueDate2);
 		ToDoItem t3 = new ToDoItem("Aktivitet3", "Description3", notOverDueDate1);
-		
+
 		todoLIST.addToDo(t1);
 		todoLIST.addToDo(t2);
 		todoLIST.addToDo(t3);
